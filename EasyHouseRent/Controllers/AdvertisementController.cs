@@ -56,24 +56,29 @@ namespace EasyHouseRent.Controllers
         [HttpPost]
         public string Post([FromBody] Anuncios Ad)
         {
-            string sql = $"insert into anuncios (idusuario,titulo,descripcion,puntuacion,direccion,estado,tipoEstructura,valor,fecha,certificado) values('" + Ad.idusuario + "','" + Ad.titulo + "','" + Ad.descripcion + "','" + Ad.puntuacion + "','" + Ad.direccion + "','" + Ad.estado + "','" + Ad.tipoEstructura + "','" + Ad.valor + "','" + Ad.fecha + "','" + Ad.certificado + "');";
+            //Insertar anuncio
+            string sql = "INSERT INTO anuncios (idusuario,titulo,descripcion,puntuacion,direccion,estado,tipoEstructura,valor,fecha,certificado) VALUES ('" + Ad.idusuario + "','" + Ad.titulo + "','" + Ad.descripcion + "','" + Ad.puntuacion + "','" + Ad.direccion + "','" + Ad.estado + "','" + Ad.tipoEstructura + "','" + Ad.valor + "','" + Ad.fecha + "','" + Ad.certificado + "');";
             string result = db.executeSql(sql);
             return result;
         }
 
         // PUT api/<AdController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public string Put([FromBody] Anuncios ad)
         {
+            //Actualizar anuncio
+            string sql = "UPDATE anuncios SET titulo = '" + ad.titulo + "', descripcion = '" + ad.descripcion + "', puntuacion = '" + ad.puntuacion + "', direccion ='" + ad.direccion + "', estado ='" + ad.estado + "', tipoEstructura ='" + ad.tipoEstructura + "', valor ='" + ad.valor + "', fecha ='" + ad.fecha + "', certificado ='" + ad.certificado + "'  WHERE idanuncio = '" + ad.idanuncio + "'";
+            string result = db.executeSql(sql);
+            return result;
         }
 
         // DELETE api/<AdController>/5
-        [HttpDelete("{id}")]
-        public string Delete(int id,[FromBody] Anuncios anuncio)
+        [HttpDelete]
+        public string Delete([FromBody] Anuncios ad)
         {
-            string sql = $"Delete * from anuncios where idanuncio = '{id}'";
+            //Eliminar Anuncio
+            string sql = $"DELETE FROM anuncios WHERE idanuncio =" + ad.idanuncio;
             string result = db.executeSql(sql);
-
             return result;
         }
     }
