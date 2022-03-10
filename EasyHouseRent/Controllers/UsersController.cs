@@ -53,30 +53,30 @@ namespace EasyHouseRent.Controllers
         [HttpPost]
         public string Post([FromBody] Usuarios user)
         {
-            string sql = $"insert into usuarios (nombre,apellidos,fechaNacimiento,telefono,email,contraseña,estado,departamento,municipio) values('" + user.nombre + "','" + user.apellidos + "','" + user.fechaNacimiento + "','" + user.telefono + "','" + user.email + "','" + Encrypt.GetSHA256(user.contraseña) + "','" + user.estado + "','" + user.departamento + "','" + user.municipio + "');";
+            //Insertar usuario
+            string sql = "INSERT INTO usuarios (nombre,apellidos,fechaNacimiento,telefono,email,contraseña,estado,departamento,municipio) VALUES ('" + user.nombre + "','" + user.apellidos + "','" + user.fechaNacimiento + "','" + user.telefono + "','" + user.email + "','" + Encrypt.GetSHA256(user.contraseña) + "','" + user.estado + "','" + user.departamento + "','" + user.municipio + "');";
             string result = db.executeSql(sql);
             return result;
-        }
-        [HttpPost]
-        public void PostGet( )
-        {
-            
         }
 
         // PUT api/<UsersController>/5
         [HttpPut]
-        public string Put( [FromBody]Usuarios user)
+        public string Put([FromBody] Usuarios user)
         {
-
-            string sql = "insert into usuarios (nombre,apellidos,fechaNacimiento,telefono,email,contraseña,estado) values('" + user.nombre + "','" + user.apellidos + "'," + Convert.ToDateTime(user.fechaNacimiento) + "," + user.telefono + ",'" + user.email + "','" + user.contraseña + "','" + user.estado + ");";
-            string result = db.executeSql(sql);
-            return result;
+            //Actualizar datos del Usuario
+            string sql = "UPDATE usuarios SET nombre = '" + user.nombre + "', apellidos = '" + user.apellidos + "', fechaNacimiento = '" + user.fechaNacimiento + "', telefono ='" + user.telefono + "', email ='" + user.email + "', contraseña ='" + user.contraseña + "', estado ='" + user.estado + "', departamento ='" + user.departamento + "', municipio ='" + user.municipio + "'  WHERE idusuario = '" + user.idusuario + "'";
+            string resultado = db.executeSql(sql);
+            return resultado;
         }
 
         // DELETE api/<UsersController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public string Delete([FromBody] Usuarios user)
         {
+            //Eliminar Usuario
+            string sql = "DELETE FROM usuarios WHERE idusuario = " + user.idusuario;
+            string result = db.executeSql(sql);
+            return result;
         }
     }
 }
