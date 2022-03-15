@@ -18,42 +18,28 @@ namespace EasyHouseRent.Controllers
         // GET: api/<UsersController>
         BaseData db = new BaseData(); 
         [HttpGet]
-        public string Get([FromBody] Usuarios user)
+        public IEnumerable<Usuarios> Get([FromQuery] Usuarios user)
         {
             string sql = $"SELECT * FROM usuarios where email = '{user.email}' and contraseña = '{user.contraseña}'";
-            bool validation = true;
-            string data = "";
-            var token = "";
             DataTable dt = db.getTable(sql);
             List<Usuarios> usersList = new List<Usuarios>();
-            if (dt == null)
-            {
-                validation = false;
-                data = "Datos incorrectos";
-            }
+            usersList = (from DataRow dr in dt.Rows
+                         select new Usuarios()
+                         {
+                             idusuario = Convert.ToInt32(dr["idusuario"]),
+                             nombre = dr["nombre"].ToString(),
+                             apellidos = dr["apellidos"].ToString(),
+                             fechaNacimiento = dr["fechaNacimiento"].ToString(),
+                             telefono = dr["telefono"].ToString(),
+                             email = dr["email"].ToString(),
+                             contraseña = dr["contraseña"].ToString(),
+                             estado = dr["estado"].ToString(),
+                             departamento = Convert.ToInt32(dr["departamento"]),
+                             municipio = Convert.ToInt32(dr["municipio"])
 
-            else
-            {
-                usersList = (from DataRow dr in dt.Rows
-                             select new Usuarios()
-                             {
-                                 idusuario = Convert.ToInt32(dr["idusuario"]),
-                                 nombre = dr["nombre"].ToString(),
-                                 apellidos = dr["apellidos"].ToString(),
-                                 fechaNacimiento = dr["fechaNacimiento"].ToString(),
-                                 telefono = dr["telefono"].ToString(),
-                                 email = dr["email"].ToString(),
-                                 contraseña = dr["contraseña"].ToString(),
-                                 estado = dr["estado"].ToString(),
-                                 departamento = Convert.ToInt32(dr["departamento"]),
-                                 municipio = Convert.ToInt32(dr["municipio"])
+                         }).ToList();
 
-                             }).ToList();
-                data = Guid.NewGuid().ToString();
-                token = TokenGenerator.GenerateTokenJwt(user.nombre);
-
-            }
-            return token;
+            return usersList;
         }
 
         // GET api/<UsersController>/5
