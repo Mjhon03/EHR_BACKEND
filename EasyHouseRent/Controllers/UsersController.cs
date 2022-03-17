@@ -41,6 +41,7 @@ namespace EasyHouseRent.Controllers
 
             return usersList;
         }
+        //https://localhost:44352/api/Users?email=juancito&contrase%C3%B1a=jhoncito
 
         // GET api/<UsersController>/5
         [HttpGet("{email}/{password}")]
