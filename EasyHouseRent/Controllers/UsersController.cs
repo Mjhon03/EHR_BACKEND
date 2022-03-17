@@ -20,7 +20,7 @@ namespace EasyHouseRent.Controllers
         [HttpGet]
         public IEnumerable<Usuarios> Get([FromQuery] Usuarios user)
         {
-            string sql = $"SELECT * FROM usuarios where email = '{user.email}' and contraseña = '{user.contraseña}'";
+            string sql = $"SELECT * FROM usuarios where email = '{user.email}' and contraseña = '{Encrypt.GetSHA256(user.contraseña)}'";
             DataTable dt = db.getTable(sql);
             List<Usuarios> usersList = new List<Usuarios>();
             usersList = (from DataRow dr in dt.Rows
@@ -40,6 +40,9 @@ namespace EasyHouseRent.Controllers
                          }).ToList();
 
             return usersList;
+
+
+
         }
         //https://localhost:44352/api/Users?email=juancito&contrase%C3%B1a=jhoncito
 
