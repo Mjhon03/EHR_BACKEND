@@ -34,18 +34,20 @@ namespace EasyHouseRent.Controllers
             return MunicipioList;
         }
 
-        // GET api/<MunicipalityController>/5
+        // GET api/<MunicipalityController>/nombreDepartamento
         [HttpGet("{nombreDepartamento}")]
         [Route("api/Municipality/{nombreDepartamento}")]
         public IEnumerable<Municipios>Get([FromQuery]string nombreDepartamento)
         {
-            string sql = $"select m.nombre FROM municipios m INNER JOIN departamento d on m.departamento=d.iddepartamento where d.nombre = '{nombreDepartamento}'";
+            string sql = $"select m.* FROM municipios m INNER JOIN departamento d on m.departamento=d.iddepartamento where d.nombre = '{nombreDepartamento}'";
             DataTable dt = db.getTable(sql);
             List<Municipios> MunicipioList = new List<Municipios>();
             MunicipioList = (from DataRow dr in dt.Rows
                              select new Municipios()
                              {
-                                 nombre = dr["nombre"].ToString()
+                                 idmunicipio = Convert.ToInt32(dr["idmunicipio"]),
+                                 nombre = dr["nombre"].ToString(),
+                                 departamento = Convert.ToInt32(dr["departamento"]),
                              }).ToList();
             return MunicipioList;
         }
