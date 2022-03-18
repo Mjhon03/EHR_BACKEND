@@ -20,9 +20,9 @@ namespace EasyHouseRent.Controllers
 
         // GET: api/<DepartmentController>
         [HttpGet]
-        public IEnumerable<Departamento> Get([FromQuery] Departamento dep)
+        public IEnumerable<Departamento> Get()
         {
-            string sql = "SELECT * FROM departamento ";
+            string sql = "SELECT * FROM departamento WHERE nombre != 'desconocido'";
             DataTable dt = db.getTable(sql);
             List<Departamento> usersList = new List<Departamento>();
             usersList = (from DataRow dr in dt.Rows
