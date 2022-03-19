@@ -3,6 +3,7 @@ using EasyHouseRent.Model.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,9 +26,21 @@ namespace EasyHouseRent.Controllers
 
         // GET api/<PasswordController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        [Route("api/Password/{idusuario}")]
+        public IEnumerable<Usuarios> GetPassword(int id, [FromBody] Usuarios user)
         {
-            return "value";
+            string sql = $"SELECT idusuario,contraseña FROM usuarios WHERE idusuario = '{id}' AND contraseña = '{user.contraseña}'";
+            DataTable dt = db.getTable(sql);
+            List<Usuarios> usersList = new List<Usuarios>();
+            usersList = (from DataRow dr in dt.Rows
+                         select new Usuarios()
+                         {
+                             idusuario = Convert.ToInt32(dr["idusuario"]),
+                             contraseña = dr["contraseña"].ToString(),
+
+                         }).ToList();
+
+            return usersList;
         }
 
         // POST api/<PasswordController>
