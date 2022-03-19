@@ -20,10 +20,10 @@ namespace EasyHouseRent.Controllers
         [HttpGet]
         public IEnumerable<Municipios> Get()
         {
-            string sql = "SELECT * FROM municipios";
+            string sql = "SELECT * FROM municipios WHERE nombre != 'desconocido'";
             DataTable dt = db.getTable(sql);
-            List<Municipios> usersList = new List<Municipios>();
-            usersList = (from DataRow dr in dt.Rows
+            List<Municipios> MunicipioList = new List<Municipios>();
+            MunicipioList = (from DataRow dr in dt.Rows
                          select new Municipios()
                          {
                              idmunicipio = Convert.ToInt32(dr["idmunicipio"]),
@@ -31,14 +31,25 @@ namespace EasyHouseRent.Controllers
                              departamento = Convert.ToInt32(dr["departamento"]),
                          }).ToList();
 
-            return usersList;
+            return MunicipioList;
         }
 
-        // GET api/<MunicipalityController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET api/<MunicipalityController>/nombreDepartamento
+        [HttpGet("{iddepartamento}")]
+        [Route("api/Municipality/{iddepartamento}")]
+        public IEnumerable<Municipios>Get([FromQuery]int iddepartamento)
         {
-            return "value";
+            string sql = $"select m.* FROM municipios m INNER JOIN departamento d on m.departamento=d.iddepartamento where d.iddepartamento = {iddepartamento}";
+            DataTable dt = db.getTable(sql);
+            List<Municipios> MunicipioList = new List<Municipios>();
+            MunicipioList = (from DataRow dr in dt.Rows
+                             select new Municipios()
+                             {
+                                 idmunicipio = Convert.ToInt32(dr["idmunicipio"]),
+                                 nombre = dr["nombre"].ToString(),
+                                 departamento = Convert.ToInt32(dr["departamento"]),
+                             }).ToList();
+            return MunicipioList;
         }
 
         // POST api/<MunicipalityController>

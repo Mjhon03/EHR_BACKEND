@@ -20,9 +20,9 @@ namespace EasyHouseRent.Controllers
 
         // GET: api/<AdController>
         [HttpGet]
-        public IEnumerable<Anuncios> GetAd([FromBody] Anuncios Ad)
+        public IEnumerable<Anuncios> Get([FromQuery] Anuncios Ad)
         {
-            string sql = $"SELECT * FROM anuncios where idusuario = '{Ad.idusuario}'";
+            string sql = $"SELECT * FROM anuncios";
             DataTable dt = db.getTable(sql);
             List<Anuncios> usersList = new List<Anuncios>();
             usersList = (from DataRow dr in dt.Rows
@@ -45,11 +45,33 @@ namespace EasyHouseRent.Controllers
             return usersList;
         }
 
+
         // GET api/<AdController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        [Route("api/advertisement/{idusuario}")]
+        public IEnumerable<Anuncios> GetAd(int id, [FromQuery] Anuncios Ad)
         {
-            return "value";
+            string sql = $"SELECT * FROM anuncios where idusuario = '{id}'";
+            DataTable dt = db.getTable(sql);
+            List<Anuncios> usersList = new List<Anuncios>();
+            usersList = (from DataRow dr in dt.Rows
+                         select new Anuncios()
+                         {
+                             idanuncio = Convert.ToInt32(dr["idanuncio"]),
+                             idusuario = Convert.ToInt32(dr["idusuario"]),
+                             titulo = dr["titulo"].ToString(),
+                             descripcion = dr["descripcion"].ToString(),
+                             puntuacion = Convert.ToInt32(dr["puntuacion"]),
+                             direccion = dr["direccion"].ToString(),
+                             estado = dr["estado"].ToString(),
+                             tipoEstructura = Convert.ToInt32(dr["tipoEstructura"]),
+                             valor = Convert.ToInt32(dr["valor"]),
+                             fecha = dr["fecha"].ToString(),
+                             certificado = dr["certificado"].ToString()
+
+                         }).ToList();
+
+            return usersList;
         }
 
         // POST api/<AdController>
