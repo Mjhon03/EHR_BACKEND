@@ -1,7 +1,10 @@
 ﻿using EasyHouseRent.Model;
 using EasyHouseRent.Model.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,14 +17,21 @@ namespace EasyHouseRent.Controllers
         // GET: api/<ConfirmationEmailController>
         BaseData db = new BaseData();
         [HttpGet]
-        public bool Get([FromBody] Usuarios user)
+        public IEnumerable<Usuarios> Get([FromQuery] Usuarios user)
         {
             string sql = $"SELECT email FROM usuarios where email = '{user.email}';";
+            List<Usuarios> usersList = new List<Usuarios>();
+            DataTable dt = db.getTable(sql);
+            usersList = (from DataRow dr in dt.Rows
+                         select new Usuarios()
+                         {
+                             email = dr["email"].ToString(),
+                         }).ToList();
 
-            db.ConfirmationEmial(sql);
-            return db.ConfirmationEmial(sql);
+
+            return usersList;
         }
-
+        
         // GET api/<ConfirmationEmailController>/5
         [HttpGet("{id}")]
         public string Get(int id)
