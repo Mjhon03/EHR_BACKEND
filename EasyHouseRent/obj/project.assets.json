@@ -8882,11 +8882,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\adsi\\Desktop\\EHR\\EHR_BACKEND\\EasyHouseRent\\EasyHouseRent.csproj",
+      "projectUniqueName": "C:\\Users\\adsi\\Desktop\\EHR_BACKEND\\EasyHouseRent\\EasyHouseRent.csproj",
       "projectName": "EasyHouseRent",
-      "projectPath": "C:\\Users\\adsi\\Desktop\\EHR\\EHR_BACKEND\\EasyHouseRent\\EasyHouseRent.csproj",
+      "projectPath": "C:\\Users\\adsi\\Desktop\\EHR_BACKEND\\EasyHouseRent\\EasyHouseRent.csproj",
       "packagesPath": "C:\\Users\\adsi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\adsi\\Desktop\\EHR\\EHR_BACKEND\\EasyHouseRent\\obj\\",
+      "outputPath": "C:\\Users\\adsi\\Desktop\\EHR_BACKEND\\EasyHouseRent\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\adsi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -8952,7 +8952,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }
