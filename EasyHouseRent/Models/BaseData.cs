@@ -65,30 +65,5 @@ namespace EasyHouseRent.Model
             }
             return dt;
         }
-
-
-        public bool ConfirmationEmial(string sql)
-        {
-            DataTable dt = new DataTable();
-            bool result;
-            try
-            {
-                connection.Open();
-                MySqlCommand cmd = new MySqlCommand(sql, connection);
-
-                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-
-                adapter.Fill(dt);
-                connection.Close();
-                adapter.Dispose();
-                result = true;
-            }
-            catch
-            {
-                dt = null;
-                result = false;
-            }
-            return result;
-        }
     }
 }
