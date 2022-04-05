@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8dmXjEenZxMwKcTq0Kz2T3Bn9RXDRc2sJXV/BAbp5uVnuhB5VSHtHIp9wcUzDiOkgpV+uB2Iq3hi9LJTYYjj5w==",
+  "dgSpecHash": "+Uw9YUcgEBebvMX6xnOEfuJtc8X6+iY1Pdmodp2nksp3qLnyHtLcwV+3Jj+qXK6hp5vaF4PsPUuimz7JytmkTA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\adsi\\Desktop\\EHR\\EHR_BACKEND\\EasyHouseRent\\EasyHouseRent.csproj",
+  "projectFilePath": "C:\\EHR\\EHR_BACKEND\\EasyHouseRent\\EasyHouseRent.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\adsi\\.nuget\\packages\\bouncycastle.netcore\\1.8.5\\bouncycastle.netcore.1.8.5.nupkg.sha512",
     "C:\\Users\\adsi\\.nuget\\packages\\google.protobuf\\3.14.0\\google.protobuf.3.14.0.nupkg.sha512",

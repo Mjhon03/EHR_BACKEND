@@ -20,7 +20,7 @@ namespace EasyHouseRent.Controllers
         [HttpGet]
         public IEnumerable<Usuarios> Get([FromQuery] Usuarios user)
         {
-            string sql = $"SELECT * FROM usuarios where email = '{user.email}' and contraseña = '{Encrypt.GetSHA256(user.contraseña)}'";
+            string sql = $"SELECT * FROM usuarios where email = '{user.email}' and contraseña = '{Encrypt.EncryptKey(user.contraseña)}'";
             DataTable dt = db.getTable(sql);
             List<Usuarios> usersList = new List<Usuarios>();
             usersList = (from DataRow dr in dt.Rows
@@ -58,7 +58,7 @@ namespace EasyHouseRent.Controllers
         public string Post([FromBody] Usuarios user)
         {
             //Insertar usuario
-            string sql = "INSERT INTO usuarios (nombre,apellidos,edad,telefono,email,contraseña,estado,departamento,municipio) VALUES ('" + user.nombre + "','" + user.apellidos + "','" + user.edad + "','" + user.telefono + "','" + user.email + "','" + Encrypt.GetSHA256(user.contraseña) + "','" + user.estado + "','" + user.departamento + "','" + user.municipio + "');";
+            string sql = "INSERT INTO usuarios (nombre,apellidos,edad,telefono,email,contraseña,estado,departamento,municipio) VALUES ('" + user.nombre + "','" + user.apellidos + "','" + user.edad + "','" + user.telefono + "','" + user.email + "','" + Encrypt.EncryptKey(user.contraseña) + "','" + user.estado + "','" + user.departamento + "','" + user.municipio + "');";
             string result = db.executeSql(sql);
             return result;
         }
