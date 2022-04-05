@@ -20,7 +20,7 @@ namespace EasyHouseRent.Controllers
         [HttpGet]
         public IEnumerable<Usuarios> Get([FromQuery] Usuarios user)
         {
-            string sql = $"SELECT * FROM usuarios where email = '{user.email}' and contraseña = '{Encrypt.GetSHA256(user.contraseña)}'";
+            string sql = $"SELECT * FROM usuarios where email = '{user.email}' and contraseña = '{Encrypt.EncryptKey(user.contraseña)}'";
             DataTable dt = db.getTable(sql);
             List<Usuarios> usersList = new List<Usuarios>();
             usersList = (from DataRow dr in dt.Rows
@@ -58,7 +58,7 @@ namespace EasyHouseRent.Controllers
         public string Post([FromBody] Usuarios user)
         {
             //Insertar usuario
-            string sql = "INSERT INTO usuarios (nombre,apellidos,edad,telefono,email,contraseña,estado,departamento,municipio) VALUES ('" + user.nombre + "','" + user.apellidos + "','" + user.edad + "','" + user.telefono + "','" + user.email + "','" + Encrypt.GetSHA256(user.contraseña) + "','" + user.estado + "','" + user.departamento + "','" + user.municipio + "');";
+            string sql = "INSERT INTO usuarios (nombre,apellidos,edad,telefono,email,contraseña,estado,departamento,municipio) VALUES ('" + user.nombre + "','" + user.apellidos + "','" + user.edad + "','" + user.telefono + "','" + user.email + "','" + Encrypt.EncryptKey(user.contraseña) + "','" + user.estado + "','" + user.departamento + "','" + user.municipio + "');";
             string result = db.executeSql(sql);
             return result;
         }
@@ -68,7 +68,7 @@ namespace EasyHouseRent.Controllers
         public string Put([FromBody] Usuarios user)
         {
             //Actualizar datos del Usuario
-            string sql = "UPDATE usuarios SET nombre = '" + user.nombre + "', apellidos = '" + user.apellidos + "', edad = '" + user.edad + "', telefono ='" + user.telefono + "', email ='" + user.email + "', contraseña ='" + user.contraseña + "', estado ='" + user.estado + "', departamento ='" + user.departamento + "', municipio ='" + user.municipio + "'  WHERE idusuario = '" + user.idusuario + "'";
+            string sql = "UPDATE usuarios SET nombre = '" + user.nombre + "', apellidos = '" + user.apellidos + "', edad = '" + user.edad + "', telefono ='" + user.telefono + "', email ='" + user.email + "', contraseña ='" + Encrypt.EncryptKey(user.contraseña) + "', estado ='" + user.estado + "', departamento ='" + user.departamento + "', municipio ='" + user.municipio + "'  WHERE idusuario = '" + user.idusuario + "'";
             string resultado = db.executeSql(sql);
             return resultado;
         }
