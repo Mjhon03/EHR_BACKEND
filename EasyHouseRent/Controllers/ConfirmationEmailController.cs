@@ -17,6 +17,7 @@ namespace EasyHouseRent.Controllers
         public bool Get([FromBody] Usuarios user)
         {
             string sql = $"SELECT email FROM usuarios where email = '{user.email}';";
+
             db.ConfirmationEmial(sql);
             return db.ConfirmationEmial(sql);
         }
