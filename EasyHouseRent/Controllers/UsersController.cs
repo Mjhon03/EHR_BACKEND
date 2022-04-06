@@ -18,7 +18,7 @@ namespace EasyHouseRent.Controllers
         // GET: api/<UsersController>
         BaseData db = new BaseData(); 
         [HttpGet]
-        public string Get([FromQuery]Usuarios user)
+        public IEnumerable<Usuarios> Get([FromQuery]Usuarios user)
         {
             string sql = $"SELECT * FROM usuarios where email = '{user.email}' and contraseña = '{Encrypt.GetSHA256(user.contraseña)}'";
             return user.Getusuarios(sql);
