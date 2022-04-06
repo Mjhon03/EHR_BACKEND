@@ -20,8 +20,16 @@ namespace EasyHouseRent.Controllers
         [HttpGet]
         public IEnumerable<Usuarios> Get([FromQuery]Usuarios user)
         {
-            string sql = $"SELECT * FROM usuarios where email = '{user.email}' and contraseña = '{Encrypt.GetSHA256(user.contraseña)}'";
-            return user.Getusuarios(sql);
+            string sql1 = $"SELECT contraseña from usuarios where email = '{user.email}';";
+            if(Convert.ToString(user.contraseña) == user.GetPassword(sql1))
+            {
+                string sql = $"SELECT * FROM usuarios where email = '{user.email}' and contraseña = '{Encrypt.GetSHA256(user.contraseña)}'";
+                return user.Getusuarios(sql);
+            }
+            else
+            {
+                return Enumerable.Empty<Usuarios>();
+            }
         }
         //https://localhost:44352/api/Users?email=juancito&contrase%C3%B1a=jhoncito
 

@@ -14,35 +14,10 @@ namespace EasyHouseRent.Model.Entities
     public class Usuarios
     {
         BaseData db = new BaseData();
+
         private int _idusuario = 0;
 
         public int idusuario { set { _idusuario = value; } get { return _idusuario; } }
-
-        /*private int seconds = 0;
-
-        public int Horas { 
-            get
-            {
-                return seconds / 3600;
-            }
-            set
-            {
-                seconds = value * 3600;
-            }
-        }
-
-        public int idusuario2 { 
-            set 
-            { 
-                _idusuario = value;
-            } 
-            get 
-            { 
-                Horas = 50
-                return _idusuario;
-            } 
-        }*/
-
 
         private string _nombre = "";
 
@@ -72,7 +47,7 @@ namespace EasyHouseRent.Model.Entities
         public int municipio { set { _municipio = value; } get { return _municipio; } }
 
 
-        public string Getusuarios(string sql)
+        public IEnumerable<Usuarios> Getusuarios(string sql)
         {
             DataTable dt = db.getTable(sql);
             List<Usuarios> usersList = new List<Usuarios>();
@@ -85,7 +60,6 @@ namespace EasyHouseRent.Model.Entities
                              edad = Convert.ToInt32(dr["edad"]),
                              telefono = dr["telefono"].ToString(),
                              email = dr["email"].ToString(),
-                             contraseña = dr["contraseña"].ToString(),
                              estado = dr["estado"].ToString(),
                              departamento = Convert.ToInt32(dr["departamento"]),
                              municipio = Convert.ToInt32(dr["municipio"])
@@ -103,7 +77,8 @@ namespace EasyHouseRent.Model.Entities
             foreach(DataRow dr in dt.Rows)
             {
                 password = dr["contraseña"].ToString();
-            }  
+            }
+            Encrypt.DecryptKey(password);
             return password;
         }
     }
