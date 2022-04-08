@@ -17,32 +17,13 @@ namespace EasyHouseRent.Controllers
     {
 
         BaseData db = new BaseData(); 
-
+        Anuncios anuncios = new Anuncios(); 
         // GET: api/<AdController>
         [HttpGet]
         public IEnumerable<Anuncios> Get([FromQuery] Anuncios Ad)
         {
             string sql = $"SELECT * FROM anuncios";
-            DataTable dt = db.getTable(sql);
-            List<Anuncios> usersList = new List<Anuncios>();
-            usersList = (from DataRow dr in dt.Rows
-                         select new Anuncios()
-                         {
-                             idanuncio = Convert.ToInt32(dr["idanuncio"]),
-                             idusuario = Convert.ToInt32(dr["idusuario"]),
-                             titulo = dr["titulo"].ToString(),
-                             descripcion = dr["descripcion"].ToString(),
-                             puntuacion = Convert.ToInt32(dr["puntuacion"]),
-                             direccion = dr["direccion"].ToString(),
-                             estado = dr["estado"].ToString(),
-                             tipoEstructura = Convert.ToInt32(dr["tipoEstructura"]),
-                             valor = Convert.ToInt32(dr["valor"]),
-                             fecha = dr["fecha"].ToString(),
-                             certificado = dr["certificado"].ToString()
-
-                         }).ToList();
-
-            return usersList;
+            return anuncios.GetAllAdvertisment(sql);
         }
 
 
@@ -52,26 +33,7 @@ namespace EasyHouseRent.Controllers
         public IEnumerable<Anuncios> GetAd(int id, [FromQuery] Anuncios Ad)
         {
             string sql = $"SELECT * FROM anuncios where idusuario = '{id}'";
-            DataTable dt = db.getTable(sql);
-            List<Anuncios> usersList = new List<Anuncios>();
-            usersList = (from DataRow dr in dt.Rows
-                         select new Anuncios()
-                         {
-                             idanuncio = Convert.ToInt32(dr["idanuncio"]),
-                             idusuario = Convert.ToInt32(dr["idusuario"]),
-                             titulo = dr["titulo"].ToString(),
-                             descripcion = dr["descripcion"].ToString(),
-                             puntuacion = Convert.ToInt32(dr["puntuacion"]),
-                             direccion = dr["direccion"].ToString(),
-                             estado = dr["estado"].ToString(),
-                             tipoEstructura = Convert.ToInt32(dr["tipoEstructura"]),
-                             valor = Convert.ToInt32(dr["valor"]),
-                             fecha = dr["fecha"].ToString(),
-                             certificado = dr["certificado"].ToString()
-
-                         }).ToList();
-
-            return usersList;
+            return anuncios.GetAdByID(sql);
         }
 
         // POST api/<AdController>
@@ -80,8 +42,7 @@ namespace EasyHouseRent.Controllers
         {
             //Insertar anuncio
             string sql = "INSERT INTO anuncios (idusuario,titulo,descripcion,puntuacion,direccion,estado,tipoEstructura,valor,fecha,certificado) VALUES ('" + Ad.idusuario + "','" + Ad.titulo + "','" + Ad.descripcion + "','" + Ad.puntuacion + "','" + Ad.direccion + "','" + Ad.estado + "','" + Ad.tipoEstructura + "','" + Ad.valor + "','" + Ad.fecha + "','" + Ad.certificado + "');";
-            string result = db.executeSql(sql);
-            return result;
+            return db.executeSql(sql);
         }
 
         // PUT api/<AdController>/5
@@ -90,8 +51,7 @@ namespace EasyHouseRent.Controllers
         {
             //Actualizar anuncio
             string sql = "UPDATE anuncios SET titulo = '" + ad.titulo + "', descripcion = '" + ad.descripcion + "', puntuacion = '" + ad.puntuacion + "', direccion ='" + ad.direccion + "', estado ='" + ad.estado + "', tipoEstructura ='" + ad.tipoEstructura + "', valor ='" + ad.valor + "', fecha ='" + ad.fecha + "', certificado ='" + ad.certificado + "'  WHERE idanuncio = '" + ad.idanuncio + "'";
-            string result = db.executeSql(sql);
-            return result;
+            return db.executeSql(sql);
         }
 
         // DELETE api/<AdController>/5
@@ -100,8 +60,7 @@ namespace EasyHouseRent.Controllers
         {
             //Eliminar Anuncio
             string sql = $"DELETE FROM anuncios WHERE idanuncio =" + ad.idanuncio;
-            string result = db.executeSql(sql);
-            return result;
+            return db.executeSql(sql);
         }
     }
 }

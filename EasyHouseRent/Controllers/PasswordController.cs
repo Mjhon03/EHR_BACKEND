@@ -41,8 +41,7 @@ namespace EasyHouseRent.Controllers
         public string Put([FromQuery] Usuarios user)
         {
             string sql = "UPDATE usuarios SET contraseña = '" + user.contraseña + "'  WHERE idusuario = '" + user.email + "'";
-            string resultado = db.executeSql(sql);
-            return resultado;
+            return db.executeSql(sql);
         }
 
         // DELETE api/<PasswordController>/5

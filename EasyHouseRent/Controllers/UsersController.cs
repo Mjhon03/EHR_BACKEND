@@ -18,39 +18,26 @@ namespace EasyHouseRent.Controllers
         // GET: api/<UsersController>
         BaseData db = new BaseData(); 
         [HttpGet]
-        public IEnumerable<Usuarios> Get([FromQuery] Usuarios user)
+        public IEnumerable<Usuarios> Get([FromQuery]Usuarios user)
         {
-            string sql = $"SELECT * FROM usuarios where email = '{user.email}' and contraseña = '{Encrypt.EncryptKey(user.contraseña)}'";
-            DataTable dt = db.getTable(sql);
-            List<Usuarios> usersList = new List<Usuarios>();
-            usersList = (from DataRow dr in dt.Rows
-                         select new Usuarios()
-                         {
-                             idusuario = Convert.ToInt32(dr["idusuario"]),
-                             nombre = dr["nombre"].ToString(),
-                             apellidos = dr["apellidos"].ToString(),
-                             edad = Convert.ToInt32(dr["edad"]),
-                             telefono = dr["telefono"].ToString(),
-                             email = dr["email"].ToString(),
-                             contraseña = dr["contraseña"].ToString(),
-                             estado = dr["estado"].ToString(),
-                             departamento = Convert.ToInt32(dr["departamento"]),
-                             municipio = Convert.ToInt32(dr["municipio"])
-
-                         }).ToList();
-
-            return usersList;
-
-
-
+            string sql1 = $"SELECT contraseña from usuarios where email = '{user.email}';";
+            if(Convert.ToString(user.contraseña) == user.GetPassword(sql1))
+            {
+                string sql = $"SELECT * FROM usuarios where email = '{user.email}' and contraseña = '{user.contraseña}'";
+                return user.Getusuarios(sql);
+            }
+            else
+            {
+                return Enumerable.Empty<Usuarios>();
+            }
         }
-        //https://localhost:44352/api/Users?email=juancito&contrase%C3%B1a=jhoncito
 
         // GET api/<UsersController>/5
         [HttpGet("{email}/{password}")]
-        public void Get( )
+        public void Get()
         {
-           
+        
+
         }
 
         // POST api/<UsersController>
@@ -59,8 +46,7 @@ namespace EasyHouseRent.Controllers
         {
             //Insertar usuario
             string sql = "INSERT INTO usuarios (nombre,apellidos,edad,telefono,email,contraseña,estado,departamento,municipio) VALUES ('" + user.nombre + "','" + user.apellidos + "','" + user.edad + "','" + user.telefono + "','" + user.email + "','" + Encrypt.EncryptKey(user.contraseña) + "','" + user.estado + "','" + user.departamento + "','" + user.municipio + "');";
-            string result = db.executeSql(sql);
-            return result;
+            return db.executeSql(sql);
         }
 
         // PUT api/<UsersController>/5
@@ -69,8 +55,7 @@ namespace EasyHouseRent.Controllers
         {
             //Actualizar datos del Usuario
             string sql = "UPDATE usuarios SET nombre = '" + user.nombre + "', apellidos = '" + user.apellidos + "', edad = '" + user.edad + "', telefono ='" + user.telefono + "', email ='" + user.email + "', contraseña ='" + Encrypt.EncryptKey(user.contraseña) + "', estado ='" + user.estado + "', departamento ='" + user.departamento + "', municipio ='" + user.municipio + "'  WHERE idusuario = '" + user.idusuario + "'";
-            string resultado = db.executeSql(sql);
-            return resultado;
+            return db.executeSql(sql); 
         }
 
         // DELETE api/<UsersController>/5
@@ -79,8 +64,7 @@ namespace EasyHouseRent.Controllers
         {
             //Eliminar Usuario
             string sql = "DELETE FROM usuarios WHERE idusuario = " + user.idusuario;
-            string result = db.executeSql(sql);
-            return result;
+            return db.executeSql(sql); 
         }
     }
 }
