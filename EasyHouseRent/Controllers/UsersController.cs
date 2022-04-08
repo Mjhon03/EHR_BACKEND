@@ -31,14 +31,14 @@ namespace EasyHouseRent.Controllers
                 return Enumerable.Empty<Usuarios>();
             }
         }
-        //https://localhost:44352/api/Users?email=juancito&contrase%C3%B1a=jhoncito
 
         // GET api/<UsersController>/5
-        /*[HttpGet("{email}/{password}")]
-        public void Get( )
+        [HttpGet("{email}/{password}")]
+        public void Get()
         {
-           
-        }*/
+        
+
+        }
 
         // POST api/<UsersController>
         [HttpPost]
@@ -46,8 +46,7 @@ namespace EasyHouseRent.Controllers
         {
             //Insertar usuario
             string sql = "INSERT INTO usuarios (nombre,apellidos,edad,telefono,email,contraseña,estado,departamento,municipio) VALUES ('" + user.nombre + "','" + user.apellidos + "','" + user.edad + "','" + user.telefono + "','" + user.email + "','" + Encrypt.EncryptKey(user.contraseña) + "','" + user.estado + "','" + user.departamento + "','" + user.municipio + "');";
-            string result = db.executeSql(sql);
-            return result;
+            return db.executeSql(sql);
         }
 
         // PUT api/<UsersController>/5
@@ -56,8 +55,7 @@ namespace EasyHouseRent.Controllers
         {
             //Actualizar datos del Usuario
             string sql = "UPDATE usuarios SET nombre = '" + user.nombre + "', apellidos = '" + user.apellidos + "', edad = '" + user.edad + "', telefono ='" + user.telefono + "', email ='" + user.email + "', contraseña ='" + Encrypt.EncryptKey(user.contraseña) + "', estado ='" + user.estado + "', departamento ='" + user.departamento + "', municipio ='" + user.municipio + "'  WHERE idusuario = '" + user.idusuario + "'";
-            string resultado = db.executeSql(sql);
-            return resultado;
+            return db.executeSql(sql); 
         }
 
         // DELETE api/<UsersController>/5
@@ -66,8 +64,7 @@ namespace EasyHouseRent.Controllers
         {
             //Eliminar Usuario
             string sql = "DELETE FROM usuarios WHERE idusuario = " + user.idusuario;
-            string result = db.executeSql(sql);
-            return result;
+            return db.executeSql(sql); 
         }
     }
 }

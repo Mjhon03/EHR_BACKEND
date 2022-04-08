@@ -7,7 +7,11 @@ namespace EasyHouseRent.Model.Entities
 {
     public class Estructura
     {
-        public int idestructura { set; get;}
-        public string nombre {set; get;}
+        private int _idestructura = 0;
+        public int idestructura { get { return _idestructura; } set { _idestructura = value; } }
+
+        private string _nombre {set; get;}
+        public string nombre { get { return _nombre;} set { _nombre = value; } }
+
     }
 }

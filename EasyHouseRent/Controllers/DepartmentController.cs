@@ -17,22 +17,14 @@ namespace EasyHouseRent.Controllers
     {
 
         BaseData db = new BaseData();
+        Departamento departamento = new Departamento();
 
         // GET: api/<DepartmentController>
         [HttpGet]
         public IEnumerable<Departamento> Get()
         {
             string sql = "SELECT * FROM departamento WHERE nombre != 'desconocido'";
-            DataTable dt = db.getTable(sql);
-            List<Departamento> usersList = new List<Departamento>();
-            usersList = (from DataRow dr in dt.Rows
-                         select new Departamento()
-                         {
-                             iddepartamento = Convert.ToInt32(dr["iddepartamento"]),
-                             nombre = dr["nombre"].ToString(),
-                         }).ToList();
-
-            return usersList;
+            return departamento.GetAllDepartment(sql);
         }
 
         // GET api/<DepartmentController>/5
