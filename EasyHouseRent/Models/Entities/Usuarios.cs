@@ -78,8 +78,22 @@ namespace EasyHouseRent.Model.Entities
             {
                 password = dr["contraseña"].ToString();
             }
-            Encrypt.DecryptKey(password);
             return password;
+        }
+
+        public bool ConfirmationEmail(string sql)
+        {
+            DataTable dt = db.getTable(sql);
+            if (dt != null && dt.Rows.Count==1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+           
         }
     }
 }

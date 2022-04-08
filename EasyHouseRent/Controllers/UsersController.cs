@@ -23,7 +23,7 @@ namespace EasyHouseRent.Controllers
             string sql1 = $"SELECT contraseña from usuarios where email = '{user.email}';";
             if(Convert.ToString(user.contraseña) == user.GetPassword(sql1))
             {
-                string sql = $"SELECT * FROM usuarios where email = '{user.email}' and contraseña = '{Encrypt.GetSHA256(user.contraseña)}'";
+                string sql = $"SELECT * FROM usuarios where email = '{user.email}' and contraseña = '{user.contraseña}'";
                 return user.Getusuarios(sql);
             }
             else
